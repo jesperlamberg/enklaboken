@@ -4,3 +4,85 @@
   margin: 0;
   padding: 0;
 }
+
+:root {
+  --font-size-md: 1.6rem;
+  --font-size-lg: 2rem;
+  --font-size-xl: 2.4rem;
+  --font-size-xxl: 3.2rem;
+}
+
+html {
+  font-size: 62.5%;
+  scrollbar-gutter: stable;
+}
+
+body {
+  font-size: var(--font-size-md);
+  width: 100ch;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0;
+
+  & .actions {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+h1 {
+  font-size: var(--font-size-xxl);
+}
+
+h2 {
+  font-size: var(--font-size-xl);
+}
+
+h3, th {
+  font-size: var(--font-size-lg);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tbody tr {
+  border-top: 1px solid #ddd;
+}
+
+th {
+  text-align: left;
+}
+
+td:last-child,
+th:last-child {
+  text-align: right;
+}
+
+.transactions td:nth-child(2) {
+  text-align: right;
+}
+
+button {
+  padding: 1rem;
+  border-radius: .5rem;
+  border: 1px solid #ddd;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: #eee;
+  }
+}
