@@ -14,8 +14,9 @@ export default function Home() {
   function createAccount() {
     const newAccount = createAccountService(
       accounts,
-      "1000",
-      "Företagskonto"
+      "1930",
+      "Företagskonto",
+      "debit"
     );
 
     setAccounts([...accounts, newAccount]);

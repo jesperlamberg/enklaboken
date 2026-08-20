@@ -6,33 +6,38 @@ export const initialAccounts: Account[] = [
     id: 1,
     number: "1930",
     name: "Företagskonto/checkkonto/affärskonto",
+    normalBalance: "debit",
     active: true
   },
   {
     id: 2,
     number: "2611",
     name: "Utgående moms på försäljning inom Sverige, 25 %",
+    normalBalance: "credit",
     active: true
   },
   {
     id: 3,
     number: "2641",
     name: "Debiterad ingående moms",
+    normalBalance: "debit",
     active: true
   },
   {
     id: 4,
     number: "3010",
     name: "Försäljning",
+    normalBalance: "credit",
     active: true
   },
   {
     id: 5,
     number: "5611",
     name: "Drivmedel",
+    normalBalance: "debit",
     active: true
   }
-]
+];
 
 export const initialVouchers: Voucher[] = [
   {
