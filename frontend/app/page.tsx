@@ -5,16 +5,14 @@ import { Header } from "./components/Header";
 import { initialAccounts, initialTransactions } from "./data/mockData";
 import { AccountsTable } from "./components/AccountsTable";
 import { TransactionTable } from "./components/TransactionsTable";
+import { createAccount as createAccountService } from "./services/AccountService";
 
 export default function Home() {
   const [accounts, setAccounts] = useState(initialAccounts);
   const [transactions, setTransactions] = useState(initialTransactions);
 
   function createAccount() {
-    const newAccount = {
-      id: accounts.length + 1,
-      name: "Företagskonto"
-    };
+    const newAccount = createAccountService(accounts, "Företagskonto");
 
     setAccounts([...accounts, newAccount]);
   }
