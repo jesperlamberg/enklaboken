@@ -1,29 +1,84 @@
-export const initialAccounts = [
-  {
-    id: 1,
-    name: "Företagskonto"
-  },
-  {
-    id: 2,
-    name: "Moms"
-  }
-];
+import { Account } from "../models/Account";
+import { Voucher } from "../models/Voucher";
 
-export const initialTransactions = [
+export const initialAccounts: Account[] = [
   {
     id: 1,
-    accountId: 1,
-    type: "income",
-    description: "Avgift för tjänst",
-    amount: 49,
-    date: "2026-08-19"
+    number: "1930",
+    name: "Företagskonto/checkkonto/affärskonto",
+    active: true
   },
   {
     id: 2,
-    accountId: 1,
-    type: "expense",
+    number: "2611",
+    name: "Utgående moms på försäljning inom Sverige, 25 %",
+    active: true
+  },
+  {
+    id: 3,
+    number: "2641",
+    name: "Debiterad ingående moms",
+    active: true
+  },
+  {
+    id: 4,
+    number: "3010",
+    name: "Försäljning",
+    active: true
+  },
+  {
+    id: 5,
+    number: "5611",
+    name: "Drivmedel",
+    active: true
+  }
+]
+
+export const initialVouchers: Voucher[] = [
+  {
+    id: 1,
+    voucherNumber: 1,
+    date: "2026-08-19",
+    description: "Försäljning av tjänst",
+    entries: [
+      {
+        accountId: 1,
+        debit: 1250,
+        credit: 0
+      },
+      {
+        accountId: 4,
+        debit: 0,
+        credit: 1000
+      },
+      {
+        accountId: 2,
+        debit: 0,
+        credit: 250
+      }
+    ]
+  },
+  {
+    id: 2,
+    voucherNumber: 2,
+    date: "2026-08-19",
     description: "Bränsle",
-    amount: 800,
-    date: "2026-08-19"
+    entries: [
+      {
+        accountId: 5,
+        debit: 640,
+        credit: 0
+      },
+      {
+        accountId: 3,
+        debit: 160,
+        credit: 0
+      },
+      {
+        accountId: 1,
+        debit: 0,
+        credit: 800
+      }
+    ]
   }
 ]

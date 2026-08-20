@@ -71,10 +71,6 @@ th:last-child {
   text-align: right;
 }
 
-.transactions td:nth-child(2) {
-  text-align: right;
-}
-
 button {
   padding: 1rem;
   border-radius: .5rem;

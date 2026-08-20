@@ -2,17 +2,21 @@
 
 import { useState } from "react";
 import { Header } from "./components/Header";
-import { initialAccounts, initialTransactions } from "./data/mockData";
+import { initialAccounts, initialVouchers } from "./data/mockData";
 import { AccountsTable } from "./components/AccountsTable";
-import { TransactionTable } from "./components/TransactionsTable";
+import { VouchersTable } from "./components/VouchersTable";
 import { createAccount as createAccountService } from "./services/AccountService";
 
 export default function Home() {
   const [accounts, setAccounts] = useState(initialAccounts);
-  const [transactions, setTransactions] = useState(initialTransactions);
+  const [vouchers, setVouchers] = useState(initialVouchers);
 
   function createAccount() {
-    const newAccount = createAccountService(accounts, "Företagskonto");
+    const newAccount = createAccountService(
+      accounts,
+      "1000",
+      "Företagskonto"
+    );
 
     setAccounts([...accounts, newAccount]);
   }
@@ -23,11 +27,11 @@ export default function Home() {
       <main>
         <section id="accounts">
           <h2>Konton</h2>
-          <AccountsTable accounts={accounts} transactions={transactions} />
+          <AccountsTable accounts={accounts} vouchers={vouchers} />
         </section>
         <section className="transactions">
           <h2>Transaktioner</h2>
-          <TransactionTable transactions={transactions} />
+          <VouchersTable vouchers={vouchers} />
         </section>
       </main>
     </>

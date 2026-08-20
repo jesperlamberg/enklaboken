@@ -9,7 +9,7 @@ export function Header({ onCreateAccount }: HeaderProps) {
       <div className="actions">
         <button onClick={onCreateAccount}>Skapa konto</button>
         <button>Skapa kostnad</button>
-        <button>Skapa utgift</button>
+        <button>Skapa intäkt</button>
       </div>
     </header>
   )
