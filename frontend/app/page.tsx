@@ -1,21 +1,27 @@
+"use client";
+
+import { useState } from "react";
 import { Header } from "./components/Header";
-import { accounts, transactions } from "./data/mockData";
+import { initialAccounts, initialTransactions } from "./data/mockData";
 import { AccountsTable } from "./components/AccountsTable";
 import { TransactionTable } from "./components/TransactionsTable";
 
-function createAccount(name: string) {
-  const newAccount = {
-    id: accounts.length + 1,
-    name
-  };
-  accounts.push(newAccount);
-  return newAccount;
-}
-
 export default function Home() {
+  const [accounts, setAccounts] = useState(initialAccounts);
+  const [transactions, setTransactions] = useState(initialTransactions);
+
+  function createAccount() {
+    const newAccount = {
+      id: accounts.length + 1,
+      name: "Företagskonto"
+    };
+
+    setAccounts([...accounts, newAccount]);
+  }
+
   return (
     <>
-      <Header />
+      <Header onCreateAccount={createAccount} />
       <main>
         <section id="accounts">
           <h2>Konton</h2>

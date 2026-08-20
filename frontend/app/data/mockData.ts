@@ -1,4 +1,4 @@
-export const accounts = [
+export const initialAccounts = [
   {
     id: 1,
     name: "Företagskonto"
@@ -9,7 +9,7 @@ export const accounts = [
   }
 ];
 
-export const transactions = [
+export const initialTransactions = [
   {
     id: 1,
     accountId: 1,

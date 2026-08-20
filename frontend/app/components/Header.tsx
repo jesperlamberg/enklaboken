@@ -1,9 +1,13 @@
-export function Header() {
+type HeaderProps = {
+  onCreateAccount: () => void;
+};
+
+export function Header({ onCreateAccount }: HeaderProps) {
   return (
     <header>
       <h1>Enkelboken</h1>
       <div className="actions">
-        <button>Skapa konto</button>
+        <button onClick={onCreateAccount}>Skapa konto</button>
         <button>Skapa kostnad</button>
         <button>Skapa utgift</button>
       </div>
