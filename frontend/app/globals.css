@@ -60,6 +60,10 @@ table {
 
 tbody tr {
   border-top: 1px solid #ddd;
+
+  &:hover {
+    background: #eee;
+  }
 }
 
 th {

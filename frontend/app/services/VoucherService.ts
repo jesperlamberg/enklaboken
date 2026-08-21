@@ -13,3 +13,7 @@ export function isBalanced(voucher: Voucher): boolean {
 
   return debit === credit;
 }
+
+export function getVoucherTotal(voucher: Voucher, type: "debit" | "credit") {
+  return voucher.entries.reduce((total, entry) => total + entry[type], 0);
+}

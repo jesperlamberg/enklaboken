@@ -41,29 +41,6 @@ export const initialAccounts: Account[] = [
 
 export const initialVouchers: Voucher[] = [
   {
-    id: 1,
-    voucherNumber: 1,
-    date: "2026-08-19",
-    description: "Försäljning av tjänst",
-    entries: [
-      {
-        accountId: 1,
-        debit: 1250,
-        credit: 0
-      },
-      {
-        accountId: 4,
-        debit: 0,
-        credit: 1000
-      },
-      {
-        accountId: 2,
-        debit: 0,
-        credit: 250
-      }
-    ]
-  },
-  {
     id: 2,
     voucherNumber: 2,
     date: "2026-08-19",
@@ -83,6 +60,29 @@ export const initialVouchers: Voucher[] = [
         accountId: 1,
         debit: 0,
         credit: 800
+      }
+    ]
+  },
+  {
+    id: 1,
+    voucherNumber: 1,
+    date: "2026-08-19",
+    description: "Försäljning av tjänst",
+    entries: [
+      {
+        accountId: 1,
+        debit: 1250,
+        credit: 0
+      },
+      {
+        accountId: 4,
+        debit: 0,
+        credit: 1000
+      },
+      {
+        accountId: 2,
+        debit: 0,
+        credit: 250
       }
     ]
   }
