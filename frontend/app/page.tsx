@@ -53,7 +53,7 @@ export default function Home() {
         </section>
         <section className="transactions">
           <h2>Transaktioner</h2>
-          <VouchersTable vouchers={vouchers} />
+          <VouchersTable vouchers={vouchers} accounts={accounts} />
         </section>
       </main>
     </>
