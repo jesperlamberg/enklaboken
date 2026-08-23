@@ -24,7 +24,7 @@ function getBalance(account: Account, vouchers: Voucher[]) {
 
 export function AccountsTable({ accounts, vouchers }: AccountsTableProps) {
   return (
-    <table>
+    <table className="table table-hover">
       <thead>
         <tr>
           <th>Konto</th>

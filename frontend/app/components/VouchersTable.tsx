@@ -39,14 +39,14 @@ export function VouchersTable({ vouchers, accounts }: VouchersTableProps) {
                   <span className="col">{voucher.voucherNumber}</span>
                   <span className="col">{voucher.date}</span>
                   <span className="col">{voucher.description}</span>
-                  <span className="col">{getVoucherTotal(voucher, "debit")} kr</span>
-                  <span className="col">{getVoucherTotal(voucher, "credit")} kr</span>
+                  <span className="col text-end">{getVoucherTotal(voucher, "debit")} kr</span>
+                  <span className="col text-end">{getVoucherTotal(voucher, "credit")} kr</span>
                 </span>
               </button>
             </h2>
             <div id={collapseId} className="accordion-collapse collapse">
               <div className="accordion-body">
-                <table className="table mb-0">
+                <table className="table table-hover">
                   <thead>
                     <tr>
                       <th>Konto</th>
@@ -58,8 +58,8 @@ export function VouchersTable({ vouchers, accounts }: VouchersTableProps) {
                     {voucher.entries.map((entry, index) => (
                       <tr key={index}>
                         <td>{getAccountLabel(entry.accountId)}</td>
-                        <td>{entry.debit} kr</td>
-                        <td>{entry.credit} kr</td>
+                        <td className="text-end">{entry.debit} kr</td>
+                        <td className="text-end">{entry.credit} kr</td>
                       </tr>
                     ))}
                   </tbody>
