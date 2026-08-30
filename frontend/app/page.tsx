@@ -52,7 +52,6 @@ export default function Home() {
           <AccountsTable accounts={accounts} vouchers={vouchers} />
         </section>
         <section className="transactions">
-          <h2>Transaktioner</h2>
           <VouchersTable vouchers={vouchers} accounts={accounts} />
         </section>
       </main>
