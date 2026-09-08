@@ -1,3 +1,5 @@
+"use client"
+
 import { Account } from "../models/Account";
 import { Voucher } from "../models/Voucher";
 import { VoucherEntry } from "../models/VoucherEntry";

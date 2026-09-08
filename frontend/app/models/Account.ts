@@ -4,4 +4,6 @@ export type Account = {
   name: string;
   normalBalance: "debit" | "credit";
   active: boolean;
+  description?: string;
+  closedAt?: string;
 }

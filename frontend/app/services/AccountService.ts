@@ -6,11 +6,15 @@ export function createAccount(
   name: string,
   normalBalance: "debit" | "credit"
 ): Account {
+  const nextId = accounts.length === 0
+    ? 1
+    : Math.max(...accounts.map((account) => account.id)) + 1;
+
   return {
-    id: accounts.length + 1,
+    id: nextId,
     number,
     name,
     normalBalance,
-    active: true
-  }
+    active: true,
+  };
 }
