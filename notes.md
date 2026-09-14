@@ -1,19 +1,19 @@
 # Enkelboken
 
-## Fysiska konton
+## Konton
+
+### Fysiska konton
 Företagets fysiska konton. Måste matcha summan på virtuella konton.
 Kvitton binds till de fysiska kontona.
 
-## Virtuella konton
+### Virtuella konton
 Företagets fysiska konton, BAS. Måste matcha summan på fysiska konton.
 
-## Moms
+### Moms
 - Ingående
 - Utgående
 - In/Ut tillsammans
 
-## Kundregister
-- Roadmap: Fakturor
-
-## Artikelregister
-- Roadmap: Fakturor
+## Roadmap
+- Kundregister för att registrera fakturor
+- Artikelregister för att generera fakturor
