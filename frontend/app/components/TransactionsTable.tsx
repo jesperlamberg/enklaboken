@@ -190,7 +190,6 @@ export function TransactionsTable({ transactions, accounts }: TransactionsTableP
             <th className="text-right">Åtgärd</th>
           </tr>
         </thead>
-        <tbody>
           {transactions.length === 0 ? (
             <tr>
               <td colSpan={10} className="text-center" style={{ padding: "2.5rem", color: "var(--text-muted)" }}>
@@ -474,7 +473,6 @@ export function TransactionsTable({ transactions, accounts }: TransactionsTableP
               );
             })
           )}
-        </tbody>
       </table>
     </div>
   );
