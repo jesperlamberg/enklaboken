@@ -17,3 +17,5 @@ Företagets fysiska konton, BAS. Måste matcha summan på fysiska konton.
 ## Roadmap
 - Kundregister för att registrera fakturor
 - Artikelregister för att generera fakturor
+- Flytta pengar mellan fysiska konton
+- Preview av bifogat kvitto

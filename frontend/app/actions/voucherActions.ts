@@ -63,18 +63,11 @@ export async function saveVoucher(input: {
       throw new Error("Ogiltig radtyp.");
     }
 
-    if (account.normalBalance !== side && !isBusinessAccount(account)) {
-      throw new Error(
-        side === "debit"
-          ? "Debet-rader får bara peka till debetkonton."
-          : "Kredit-rader får bara peka till kreditkonton."
-      );
-    }
-
     const nextEntry: VoucherEntry =
       side === "debit"
         ? { accountId: account.id, debit: row.amount, credit: 0 }
         : { accountId: account.id, debit: 0, credit: row.amount };
+
 
     nextEntries.push(nextEntry);
 

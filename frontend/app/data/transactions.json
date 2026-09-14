@@ -1,0 +1,60 @@
+[
+  {
+    "id": 1,
+    "transactionNumber": 1,
+    "date": "2026-08-19",
+    "description": "Försäljning av konsulttjänst",
+    "physicalAccountId": 1,
+    "type": "debit",
+    "amount": 1250,
+    "virtualAllocations": [
+      {
+        "virtualAccountId": 5,
+        "amount": 1000,
+        "type": "credit",
+        "description": "Försäljning"
+      },
+      {
+        "virtualAccountId": 3,
+        "amount": 250,
+        "type": "credit",
+        "description": "Utgående moms 25%"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "transactionNumber": 2,
+    "date": "2026-08-19",
+    "description": "Drivmedel Circle K",
+    "physicalAccountId": 1,
+    "type": "credit",
+    "amount": 800,
+    "receiptUrl": "",
+    "receiptFileName": "",
+    "virtualAllocations": [
+      {
+        "virtualAccountId": 6,
+        "amount": 640,
+        "type": "debit",
+        "description": "Drivmedel"
+      },
+      {
+        "virtualAccountId": 4,
+        "amount": 160,
+        "type": "debit",
+        "description": "Ingående moms 25%"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "transactionNumber": 3,
+    "date": "2026-09-08",
+    "description": "Parkeringsavgift (ej matchad)",
+    "physicalAccountId": 1,
+    "type": "credit",
+    "amount": 150,
+    "virtualAllocations": []
+  }
+]

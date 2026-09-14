@@ -2,36 +2,62 @@
   {
     "id": 1,
     "number": "1930",
-    "name": "Företagskonto/checkkonto/affärskonto",
-    "normalBalance": "debit",
-    "active": true
+    "name": "Företagskonto (Bank)",
+    "type": "physical",
+    "active": true,
+    "description": "Huvudsakligt bankkonto"
   },
   {
     "id": 2,
-    "number": "2611",
-    "name": "Utgående moms på försäljning inom Sverige, 25 %",
-    "normalBalance": "credit",
-    "active": true
+    "number": "1910",
+    "name": "Kassa",
+    "type": "physical",
+    "active": true,
+    "description": "Kontantkassa"
   },
   {
     "id": 3,
-    "number": "2641",
-    "name": "Debiterad ingående moms",
-    "normalBalance": "debit",
-    "active": true
+    "number": "2611",
+    "name": "Utgående moms 25%",
+    "type": "virtual",
+    "active": true,
+    "description": "Moms på försäljning"
   },
   {
     "id": 4,
-    "number": "3010",
-    "name": "Försäljning",
-    "normalBalance": "credit",
-    "active": true
+    "number": "2641",
+    "name": "Ingående moms 25%",
+    "type": "virtual",
+    "active": true,
+    "description": "Moms på inköp och utgifter"
   },
   {
     "id": 5,
+    "number": "3010",
+    "name": "Försäljning varor/tjänster (25% moms)",
+    "type": "virtual",
+    "defaultVatRate": 25,
+    "vatAccountId": 3,
+    "active": true,
+    "description": "Intäkter med 25% utgående moms"
+  },
+  {
+    "id": 6,
     "number": "5611",
-    "name": "Drivmedel",
-    "normalBalance": "debit",
-    "active": true
+    "name": "Drivmedel för personbilar",
+    "type": "virtual",
+    "defaultVatRate": 25,
+    "vatAccountId": 4,
+    "active": true,
+    "description": "Drivmedelskostnader med 25% ingående moms"
+  },
+  {
+    "id": 7,
+    "number": "6570",
+    "name": "Bankkostnader",
+    "type": "virtual",
+    "defaultVatRate": 0,
+    "active": true,
+    "description": "Bankavgifter (momsfria)"
   }
 ]

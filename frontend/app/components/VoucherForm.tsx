@@ -97,8 +97,8 @@ export function VoucherForm({ direction, accounts }: VoucherFormProps) {
     router.push("/");
   }
 
-  const debitAccounts = accounts.filter((account) => account.normalBalance === "debit" || isBusinessAccount(account));
-  const creditAccounts = accounts.filter((account) => account.normalBalance === "credit" || isBusinessAccount(account));
+  const debitAccounts = accounts;
+  const creditAccounts = accounts;
 
   function renderRowGroup(
     title: string,
