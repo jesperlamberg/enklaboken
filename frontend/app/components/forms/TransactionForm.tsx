@@ -2,16 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useState, useRef } from "react";
-import { saveTransaction } from "../actions/transactionActions";
-import { Account } from "../models/Account";
-import { VirtualAllocation, calculateMatchingStatus, Transaction } from "../models/Transaction";
+import { saveTransaction } from "../../actions/transactionActions";
+import { Account } from "../../models/Account";
+import { VirtualAllocation, calculateMatchingStatus, Transaction } from "../../models/Transaction";
 import {
   buildAutoSplitAllocations,
   addAllocationRow,
   removeAllocationRow,
   updateAllocationRow,
-} from "../services/TransactionService";
-import { isVatAccount } from "../services/AccountService";
+} from "../../services/TransactionService";
+import { isVatAccount } from "../../services/AccountService";
 import Link from "next/link";
 
 type TransactionFormProps = {

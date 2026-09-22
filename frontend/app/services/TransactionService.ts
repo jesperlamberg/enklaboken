@@ -62,6 +62,66 @@ export function createTransaction(
 
 export type AccountBalanceMap = Record<number, { balance: number; debitTotal: number; creditTotal: number }>;
 
+// Splits an amount across the selected account and its linked VAT account, or allocates it whole if no VAT rate applies.
+export function buildAutoSplitAllocations(
+  selectedAccount: Account,
+  virtualAccounts: Account[],
+  amount: number,
+  transactionType: "debit" | "credit"
+): VirtualAllocation[] {
+  const virtualType: "debit" | "credit" = transactionType === "credit" ? "debit" : "credit";
+
+  if (selectedAccount.defaultVatRate && selectedAccount.defaultVatRate > 0 && selectedAccount.vatAccountId) {
+    const { net, vat } = calculateVatSplit(amount, selectedAccount.defaultVatRate);
+    const vatAcc = virtualAccounts.find((a) => a.id === selectedAccount.vatAccountId);
+
+    const allocations: VirtualAllocation[] = [
+      { virtualAccountId: selectedAccount.id, amount: net, type: virtualType, description: selectedAccount.name },
+    ];
+
+    if (vatAcc) {
+      allocations.push({
+        virtualAccountId: vatAcc.id,
+        amount: vat,
+        type: virtualType,
+        description: `Moms (${selectedAccount.defaultVatRate}%)`,
+      });
+    }
+
+    return allocations;
+  }
+
+  return [{ virtualAccountId: selectedAccount.id, amount, type: virtualType, description: selectedAccount.name }];
+}
+
+export function addAllocationRow(
+  rows: VirtualAllocation[],
+  defaultAccountId: number,
+  totalAmount: number,
+  transactionType: "debit" | "credit"
+): VirtualAllocation[] {
+  const virtualType: "debit" | "credit" = transactionType === "credit" ? "debit" : "credit";
+  const currentAllocated = rows.reduce((sum, l) => sum + (Number(l.amount) || 0), 0);
+  const remaining = Math.max(0, Math.round((totalAmount - currentAllocated) * 100) / 100);
+
+  return [...rows, { virtualAccountId: defaultAccountId, amount: remaining, type: virtualType, description: "" }];
+}
+
+export function removeAllocationRow(rows: VirtualAllocation[], index: number): VirtualAllocation[] {
+  return rows.filter((_, i) => i !== index);
+}
+
+export function updateAllocationRow(
+  rows: VirtualAllocation[],
+  index: number,
+  field: keyof VirtualAllocation,
+  value: string | number
+): VirtualAllocation[] {
+  const next = [...rows];
+  next[index] = { ...next[index], [field]: field === "amount" ? Number(value) : value };
+  return next;
+}
+
 export function calculateAllAccountBalances(
   accounts: Account[],
   transactions: Transaction[]

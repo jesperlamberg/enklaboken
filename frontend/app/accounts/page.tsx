@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Header } from "../components/Header";
-import { AccountsTable } from "../components/AccountsTable";
+import { Header } from "../components/layout/Header";
+import { AccountsTable } from "../components/tables/AccountsTable";
 import { readAccounts } from "../repositories/AccountRepository";
 import { readTransactions } from "../repositories/TransactionRepository";
 import { calculateAllAccountBalances } from "../services/TransactionService";

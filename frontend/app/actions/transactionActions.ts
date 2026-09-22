@@ -1,7 +1,5 @@
 "use server";
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
 import { revalidatePath } from "next/cache";
 import { Transaction, VirtualAllocation } from "../models/Transaction";
 import { readAccounts } from "../repositories/AccountRepository";
@@ -10,30 +8,8 @@ import {
   writeTransactions,
   readTransactionById,
 } from "../repositories/TransactionRepository";
+import { saveReceiptFile } from "../repositories/ReceiptRepository";
 import { createTransaction } from "../services/TransactionService";
-
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "receipts");
-
-async function handleReceiptUpload(file: File | null): Promise<{ receiptUrl?: string; receiptFileName?: string }> {
-  if (!file || !(file instanceof File) || file.size === 0 || !file.name) {
-    return {};
-  }
-
-  await fs.mkdir(UPLOAD_DIR, { recursive: true });
-
-  const timestamp = Date.now();
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-  const fileName = `${timestamp}-${safeName}`;
-  const filePath = path.join(UPLOAD_DIR, fileName);
-
-  const buffer = Buffer.from(await file.arrayBuffer());
-  await fs.writeFile(filePath, buffer);
-
-  return {
-    receiptUrl: `/uploads/receipts/${fileName}`,
-    receiptFileName: file.name,
-  };
-}
 
 export async function saveTransaction(formData: FormData): Promise<Transaction> {
   const date = (formData.get("date") as string) || new Date().toISOString().split("T")[0];
@@ -53,7 +29,7 @@ export async function saveTransaction(formData: FormData): Promise<Transaction> 
     }
   }
 
-  const { receiptUrl, receiptFileName } = await handleReceiptUpload(receiptFile);
+  const { receiptUrl, receiptFileName } = await saveReceiptFile(receiptFile);
 
   const accounts = await readAccounts();
   const transactions = await readTransactions();
@@ -115,7 +91,7 @@ export async function attachReceiptToTransaction(
     throw new Error("Ingen fil vald.");
   }
 
-  const { receiptUrl, receiptFileName } = await handleReceiptUpload(file);
+  const { receiptUrl, receiptFileName } = await saveReceiptFile(file);
   const transactions = await readTransactions();
   const index = transactions.findIndex((tx) => tx.id === transactionId);
 

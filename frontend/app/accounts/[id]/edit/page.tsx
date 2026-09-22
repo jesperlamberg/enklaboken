@@ -1,7 +1,7 @@
-import { Header } from "../../../components/Header";
+import { Header } from "../../../components/layout/Header";
 import { readAccounts, readAccountById } from "../../../repositories/AccountRepository";
 import { notFound } from "next/navigation";
-import { EditAccountForm } from "../../../components/EditAccountForm";
+import { AccountForm } from "../../../components/forms/AccountForm";
 
 export default async function EditAccountPage({
   params,
@@ -22,7 +22,7 @@ export default async function EditAccountPage({
     <>
       <Header />
       <main>
-        <EditAccountForm account={account} allAccounts={allAccounts} />
+        <AccountForm mode="edit" account={account} allAccounts={allAccounts} />
       </main>
     </>
   );

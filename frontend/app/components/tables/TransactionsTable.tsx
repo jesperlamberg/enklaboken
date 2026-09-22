@@ -1,26 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { Account } from "../models/Account";
+import { Account } from "../../models/Account";
 import {
   Transaction,
   VirtualAllocation,
   calculateMatchingStatus,
-} from "../models/Transaction";
+} from "../../models/Transaction";
 import {
   updateTransactionAllocations,
   deleteTransaction,
-} from "../actions/transactionActions";
+} from "../../actions/transactionActions";
 import {
   buildAutoSplitAllocations,
   addAllocationRow,
   removeAllocationRow,
   updateAllocationRow,
-} from "../services/TransactionService";
-import { isVatAccount } from "../services/AccountService";
-import { Badge } from "./Badge";
-import { MatchingStatusBadge } from "./MatchingStatusBadge";
-import { useReceiptUpload } from "../hooks/useReceiptUpload";
+} from "../../services/TransactionService";
+import { isVatAccount } from "../../services/AccountService";
+import { Badge } from "../ui/Badge";
+import { MatchingStatusBadge } from "../ui/MatchingStatusBadge";
+import { useReceiptUpload } from "../../hooks/useReceiptUpload";
 
 type TransactionsTableProps = {
   transactions: Transaction[];

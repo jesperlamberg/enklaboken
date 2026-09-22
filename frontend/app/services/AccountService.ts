@@ -1,4 +1,19 @@
 import { Account, AccountType } from "../models/Account";
+import { Voucher } from "../models/Voucher";
+
+export function isVatAccount(account: Account): boolean {
+  return account.number.startsWith("26") || account.name.toLowerCase().includes("moms");
+}
+
+export function getVatAccounts(accounts: Account[], excludeId?: number): Account[] {
+  return accounts.filter((a) => a.type === "virtual" && isVatAccount(a) && a.id !== excludeId);
+}
+
+export function hasPostedEntries(accountId: number, vouchers: Voucher[]): boolean {
+  return vouchers.some((voucher) =>
+    voucher.entries.some((entry) => entry.accountId === accountId)
+  );
+}
 
 export function createAccount(
   accounts: Account[],

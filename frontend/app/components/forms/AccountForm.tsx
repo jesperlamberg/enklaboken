@@ -2,27 +2,31 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { saveAccount } from "../actions/accountActions";
-import { Account, AccountType } from "../models/Account";
-import { getVatAccounts } from "../services/AccountService";
+import { saveAccount, updateAccount } from "../../actions/accountActions";
+import { Account, AccountType } from "../../models/Account";
+import { getVatAccounts } from "../../services/AccountService";
 import Link from "next/link";
 
-type CreateAccountFormProps = {
-  existingAccounts: Account[];
-};
+type AccountFormProps =
+  | { mode: "create"; existingAccounts: Account[] }
+  | { mode: "edit"; account: Account; allAccounts: Account[] };
 
-export function CreateAccountForm({ existingAccounts }: CreateAccountFormProps) {
+export function AccountForm(props: AccountFormProps) {
   const router = useRouter();
-  const [accountType, setAccountType] = useState<AccountType>("physical");
-  const [accountNumber, setAccountNumber] = useState("");
-  const [accountName, setAccountName] = useState("");
-  const [description, setDescription] = useState("");
-  const [defaultVatRate, setDefaultVatRate] = useState<number>(0);
-  const [vatAccountId, setVatAccountId] = useState<number | undefined>(undefined);
+  const isEdit = props.mode === "edit";
+  const account = isEdit ? props.account : undefined;
+  const vatAccountPool = isEdit ? props.allAccounts : props.existingAccounts;
+
+  const [accountType, setAccountType] = useState<AccountType>(account?.type || "physical");
+  const [accountNumber, setAccountNumber] = useState(account?.number || "");
+  const [accountName, setAccountName] = useState(account?.name || "");
+  const [description, setDescription] = useState(account?.description || "");
+  const [defaultVatRate, setDefaultVatRate] = useState<number>(account?.defaultVatRate || 0);
+  const [vatAccountId, setVatAccountId] = useState<number | undefined>(account?.vatAccountId);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const virtualVatAccounts = getVatAccounts(existingAccounts);
+  const virtualVatAccounts = getVatAccounts(vatAccountPool, account?.id);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,21 +37,31 @@ export function CreateAccountForm({ existingAccounts }: CreateAccountFormProps) 
       return;
     }
 
+    const payload = {
+      number: accountNumber.trim(),
+      name: accountName.trim(),
+      type: accountType,
+      description: description.trim() || undefined,
+      defaultVatRate: accountType === "virtual" ? defaultVatRate : undefined,
+      vatAccountId: accountType === "virtual" && defaultVatRate > 0 ? vatAccountId : undefined,
+    };
+
     try {
       setIsSubmitting(true);
-      await saveAccount({
-        number: accountNumber.trim(),
-        name: accountName.trim(),
-        type: accountType,
-        description: description.trim() || undefined,
-        defaultVatRate: accountType === "virtual" ? defaultVatRate : undefined,
-        vatAccountId: accountType === "virtual" && defaultVatRate > 0 ? vatAccountId : undefined,
-      });
+      if (isEdit) {
+        await updateAccount(props.account.id, payload);
+      } else {
+        await saveAccount(payload);
+      }
 
       router.push("/accounts");
       router.refresh();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Ett fel uppstod vid skapandet av kontot.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : `Ett fel uppstod vid ${isEdit ? "uppdateringen" : "skapandet"} av kontot.`
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -56,7 +70,7 @@ export function CreateAccountForm({ existingAccounts }: CreateAccountFormProps) 
   return (
     <div className="card" style={{ maxWidth: "680px", margin: "0 auto" }}>
       <div className="card-header">
-        <h2>Skapa nytt konto</h2>
+        <h2>{isEdit ? `Redigera konto ${props.account.number}` : "Skapa nytt konto"}</h2>
       </div>
 
       {error && <div className="alert alert-danger">{error}</div>}
@@ -132,9 +146,11 @@ export function CreateAccountForm({ existingAccounts }: CreateAccountFormProps) 
               onChange={(e) => setAccountNumber(e.target.value)}
               required
             />
-            <div className="form-help">
-              {accountType === "physical" ? "Typiskt 1910-1940" : "Konto ur BAS-kontoplanen"}
-            </div>
+            {!isEdit && (
+              <div className="form-help">
+                {accountType === "physical" ? "Typiskt 1910-1940" : "Konto ur BAS-kontoplanen"}
+              </div>
+            )}
           </div>
 
           <div className="form-group">
@@ -151,7 +167,7 @@ export function CreateAccountForm({ existingAccounts }: CreateAccountFormProps) 
         </div>
 
         <div className="form-group">
-          <label htmlFor="description">Beskrivning (valfritt)</label>
+          <label htmlFor="description">Beskrivning {isEdit ? "" : "(valfritt)"}</label>
           <input
             id="description"
             className="form-control"
@@ -223,7 +239,7 @@ export function CreateAccountForm({ existingAccounts }: CreateAccountFormProps) 
             Avbryt
           </Link>
           <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? "Skapar..." : "Skapa konto"}
+            {isSubmitting ? (isEdit ? "Sparar..." : "Skapar...") : isEdit ? "Spara ändringar" : "Skapa konto"}
           </button>
         </div>
       </form>

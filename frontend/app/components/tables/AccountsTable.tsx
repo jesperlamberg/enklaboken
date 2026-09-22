@@ -1,7 +1,8 @@
-import { Account } from "../models/Account";
-import { Transaction } from "../models/Transaction";
-import { calculateAllAccountBalances } from "../services/TransactionService";
+import { Account } from "../../models/Account";
+import { Transaction } from "../../models/Transaction";
+import { calculateAllAccountBalances } from "../../services/TransactionService";
 import Link from "next/link";
+import { Badge } from "../ui/Badge";
 
 type AccountsTableProps = {
   accounts: Account[];
@@ -69,9 +70,9 @@ export function AccountsTable({
                     </div>
                   </td>
                   <td>
-                    <span className={`badge ${isPhysical ? "badge-physical" : "badge-virtual"}`}>
+                    <Badge variant={isPhysical ? "physical" : "virtual"}>
                       {isPhysical ? "🏦 Fysiskt" : "📊 Virtuellt (BAS)"}
-                    </span>
+                    </Badge>
                   </td>
                   <td>
                     {account.defaultVatRate !== undefined && account.defaultVatRate > 0 ? (

@@ -1,11 +1,11 @@
 "use client"
 
-import { Account } from "../models/Account";
-import { Voucher } from "../models/Voucher";
-import { getVoucherTotal } from "../services/VoucherService";
-import { BalanceIndicator } from "./BalanceIndicator";
-import { VoucherEntryRow } from "./VoucherEntryRow";
-import { BalanceFeedback } from "./BalanceFeedback";
+import { Account } from "../../models/Account";
+import { Voucher } from "../../models/Voucher";
+import { getVoucherTotal } from "../../services/VoucherService";
+import { BalanceIndicator } from "../ui/BalanceIndicator";
+import { VoucherEntryRow } from "../ui/VoucherEntryRow";
+import { BalanceFeedback } from "../ui/BalanceFeedback";
 
 type VouchersTableProps = {
   vouchers: Voucher[];

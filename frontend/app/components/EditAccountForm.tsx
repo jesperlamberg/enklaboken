@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { updateAccount } from "../actions/accountActions";
 import { Account, AccountType } from "../models/Account";
+import { getVatAccounts } from "../services/AccountService";
 import Link from "next/link";
 
 type EditAccountFormProps = {
@@ -22,9 +23,7 @@ export function EditAccountForm({ account, allAccounts }: EditAccountFormProps) 
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const virtualVatAccounts = allAccounts.filter(
-    (a) => a.type === "virtual" && (a.number.startsWith("26") || a.name.toLowerCase().includes("moms")) && a.id !== account.id
-  );
+  const virtualVatAccounts = getVatAccounts(allAccounts, account.id);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

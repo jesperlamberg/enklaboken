@@ -4,18 +4,9 @@ import { revalidatePath } from "next/cache";
 import { readAccounts } from "../repositories/AccountRepository";
 import { getNextVoucherId, getNextVoucherNumber, readVouchers, writeVouchers } from "../repositories/VoucherRepository";
 import { Voucher } from "../models/Voucher";
-import { VoucherEntry } from "../models/VoucherEntry";
-import { Account } from "../models/Account";
+import { buildVoucherEntries, areEntriesBalanced, VoucherRowInput } from "../services/VoucherService";
 
 export type VoucherDirection = "debit" | "credit";
-
-const isBusinessAccount = (account: Account) => account.number === "1930";
-
-export type VoucherRowInput = {
-  accountId: number;
-  side: "debit" | "credit";
-  amount: number;
-};
 
 export async function saveVoucher(input: {
   direction: VoucherDirection;
@@ -39,46 +30,9 @@ export async function saveVoucher(input: {
   }
 
   const accounts = await readAccounts();
-  const nextEntries: VoucherEntry[] = [];
-  let debitTotal = 0;
-  let creditTotal = 0;
+  const nextEntries = buildVoucherEntries(input.entries, accounts);
 
-  for (const row of input.entries) {
-    if (!Number.isFinite(row.amount) || row.amount <= 0) {
-      throw new Error("Varje rad måste ha ett positivt belopp.");
-    }
-
-    const account = accounts.find((item) => item.id === row.accountId && item.active);
-    if (!account) {
-      throw new Error("Valt konto finns inte eller är inte aktivt.");
-    }
-
-    const sameAccountUsedTwice = nextEntries.some((entry) => entry.accountId === account.id);
-    if (sameAccountUsedTwice && !isBusinessAccount(account)) {
-      throw new Error("Ett konto kan bara användas en gång per verifikation.");
-    }
-
-    const side = row.side;
-    if (side !== "debit" && side !== "credit") {
-      throw new Error("Ogiltig radtyp.");
-    }
-
-    const nextEntry: VoucherEntry =
-      side === "debit"
-        ? { accountId: account.id, debit: row.amount, credit: 0 }
-        : { accountId: account.id, debit: 0, credit: row.amount };
-
-
-    nextEntries.push(nextEntry);
-
-    if (side === "debit") {
-      debitTotal += row.amount;
-    } else {
-      creditTotal += row.amount;
-    }
-  }
-
-  if (debitTotal !== creditTotal) {
+  if (!areEntriesBalanced(nextEntries)) {
     throw new Error("Debet och kredit måste vara lika stora.");
   }
 

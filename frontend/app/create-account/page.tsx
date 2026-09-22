@@ -1,5 +1,5 @@
-import { Header } from "../components/Header";
-import { CreateAccountForm } from "../components/CreateAccountForm";
+import { Header } from "../components/layout/Header";
+import { AccountForm } from "../components/forms/AccountForm";
 import { readAccounts } from "../repositories/AccountRepository";
 
 export default async function CreateAccountPage() {
@@ -9,7 +9,7 @@ export default async function CreateAccountPage() {
     <>
       <Header />
       <main>
-        <CreateAccountForm existingAccounts={accounts} />
+        <AccountForm mode="create" existingAccounts={accounts} />
       </main>
     </>
   );
